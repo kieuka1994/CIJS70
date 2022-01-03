@@ -1,0 +1,40 @@
+body {
+    font-family: "Dancing Script";
+    font-size: 35px;
+  }
+  .question {
+    background-color: #533c3d;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    padding: 20px;
+    width: 100%;
+    text-align: left;
+    border: 1px solid rgb(255, 255, 255);
+    font-size: 30px;
+    transition: 0.5s;
+    outline: none;
+  }
+  .panel {
+    padding: 0px 20px;
+    background-color: rgb(255, 255, 255);
+    display: none;
+    overflow: hidden;
+  }
+  .question:hover {
+    background-color: #6a7e85;
+  }
+  .question:after {
+    content: "\02795"; /*Tao dau Plus*/
+    font-size: 20px;
+    float: right;
+    margin-left: 6px;
+  }
+  .answer-active:after {
+    content: "\2796"; /* Tạo dấu -*/
+  }
+  .title {
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+    font-size: 30px;
+  }
