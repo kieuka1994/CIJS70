@@ -1,40 +1,97 @@
-body {
-    font-family: "Dancing Script";
-    font-size: 35px;
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+.p__title {
+  margin-bottom: 20px;
+  color: #800080;
+  font-size: 30px;
+  font-weight: bold;
+}
+.containerForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(#7b68ee, #87cefa, #4b0082);
+}
+.formSignUp {
+  width: 300px;
+  height: 450px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 40px 30px;
+}
+.formLogin {
+  width: 300px;
+  height: 300px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 40px 30px;
+}
+input {
+  margin-bottom: 30px;
+  position: relative;
+  width: 100%;
+  height: 35px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  transition: 0.5s;
+  cursor: pointer;
+}
+input.focus {
+  transform: translate(-20px);
+}
+button {
+  height: 35px;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  color: #fff;
+  background: linear-gradient(120deg, #800080, #7b68ee);
+  border: none;
+  border-radius: 5px;
+  background-size: 200%;
+  transition: 0.5s;
+  font-weight: bold;
+  font-size: 15px;
+}
+button:hover {
+  background: linear-gradient(#7b68ee, #87cefa);
+}
+.has-error {
+  color: red;
+}
+a {
+  text-decoration: none;
+}
+
+.forny-inner {
+  display: grid;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+}
+.mail {
+  padding: 0;
+  margin: 0;
+}
+.mail h1 {
+  font-size: 40px;
+  font-weight: 700;
+  padding: 20px;
+}
+.mail p {
+  padding: 10px;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  .question {
-    background-color: #533c3d;
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    padding: 20px;
-    width: 100%;
-    text-align: left;
-    border: 1px solid rgb(255, 255, 255);
-    font-size: 30px;
-    transition: 0.5s;
-    outline: none;
+  100% {
+    transform: rotate(360deg);
   }
-  .panel {
-    padding: 0px 20px;
-    background-color: rgb(255, 255, 255);
-    display: none;
-    overflow: hidden;
-  }
-  .question:hover {
-    background-color: #6a7e85;
-  }
-  .question:after {
-    content: "\02795"; /*Tao dau Plus*/
-    font-size: 20px;
-    float: right;
-    margin-left: 6px;
-  }
-  .answer-active:after {
-    content: "\2796"; /* Tạo dấu -*/
-  }
-  .title {
-    margin-bottom: 30px;
-    text-align: center;
-    width: 100%;
-    font-size: 30px;
-  }
+}
