@@ -1,7 +1,8 @@
 import LoginScreen from "./containers/Login/index.js";
 import RegisterScreen from "./containers/Register/index.js";
 import CheckEmailScreen from "./containers/CheckEmail/index.js";
-
+import MainScreen from "./containers/Main/index.js";
+import InfoScreen from "./containers/Info/index.js";
 
 class App {
   $activeScreen;

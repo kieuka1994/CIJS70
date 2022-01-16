@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif !important;
+}
+
+body {
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #212529;
+  text-align: left;
+  background-color: #f5f8fa;
+}
+
+.img-cover {
+  width: 60%;
+  height: 100vh;
+  background: url("https://source.unsplash.com/random") no-repeat center / cover;
+}
+
+.form-container {
+  flex-grow: 1;
+  padding: 0px 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.big-title {
+  text-align: center;
+  font-size: 32px;
+  line-height: 30px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.form-control {
+  height: 60px;
+  border-radius: 10px;
+}
+.label-input {
+  line-height: 60px;
+}
+
+.error {
+  color: red;
+}
+.link {
+  text-decoration: none;
+  text-align: right;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.forny-inner {
+  display: grid;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+}
+.mail {
+  padding: 0;
+  margin: 0;
+}
+.mail h1 {
+  font-size: 40px;
+  font-weight: 700;
+  padding: 20px;
+}
+.mail p {
+  padding: 10px;
+}
+
+.loader {
+  border: 16px solid #c7c7c7;
+  border-top: 16px solid #fff;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  animation: spin 2s linear infinite;
+}
+
+.info-screen {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  justify-content: center;
+  align-items: center;
+}
+.paper {
+  background-color: #ffffff;
+  width: 60%;
+  min-width: 600px;
+  height: 55vh;
+  min-height: 450px;
+  border-radius: 15px;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.form-container {
+  flex-grow: 1;
+}
+
+.avatar-container {
+  width: 30%;
+  min-width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  border: 1px solid rgb(207, 207, 207);
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
