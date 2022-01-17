@@ -103,6 +103,35 @@ class InfoScreen {
     const { name, phone, imageUrl } = e.target;
     const user = getCurrentUser();
     createUser(user.email, "", name.value, phone.value, imageUrl.value);
+    let isError = false;
+    if (doule-checkName(name.value) !== null) {
+      isError = true;
+      this.$name.setError(doule-checkName(name.value));
+  }
+  else this.$name.setError("");
+  if (doule-checkViettelNumber(phone.value) !== null) {
+    isError = true;
+    this.$phone.setError(douuble-checkViettelNumber(phone.value));
+}
+else this.$phone.setError("");
+if(!isError){
+  if(this.$exitUser){
+      //loading
+      await updateUserData(user.email, name.value, phone.value, imageUrl.value);
+      const mainScreen = new MainScreen();
+      app.changeActiveScreen(mainScreen);
+      console.log(this.$exitUser);
+
+  } else {
+      await createUser(user.email, name.value, phone.value, imageUrl.value);
+      console.log(this.$exitUser);
+      this.$exitUser=true;
+  }
+} 
+
+
+
+
   };
 
   render(appEle) {
