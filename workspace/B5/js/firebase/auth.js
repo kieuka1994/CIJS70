@@ -23,33 +23,21 @@ const createNewAccout = (email, password) => {
     });
 };
 
-const loginWithEmailPass = async (email, password) => {
-  // firebase
-  //   .auth()
-  //   .signInWithEmailAndPassword(email, password)
-  //   .then((userCredential) => {
-  //     // Signed in
-  //     let user = userCredential.user;
-  //     console.log(user);
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     let errorCode = error.code;
-  //     let errorMessage = error.message;
-  //     _noti.error(errorCode, errorMessage);
-  //   });
-  const userCredential = await firebase
+const loginWithEmailPass = (email, password) => {
+  firebase
     .auth()
-    .signInWithEmailAndPassword(email, password);
-
-  let user = userCredential.user;
-  localStorage.setItem("emailLogined", user.email);
-  localStorage.setItem("uid", user.uid);
-  return user;
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      let user = userCredential.user;
+      console.log(user);
+      // ...
+    })
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      _noti.error(errorCode, errorMessage);
+    });
 };
 
-const getCurrentUser = () => {
-  return firebase.auth().currentUser;
-};
-
-export { createNewAccout, loginWithEmailPass, getCurrentUser };
+export { createNewAccout, loginWithEmailPass };

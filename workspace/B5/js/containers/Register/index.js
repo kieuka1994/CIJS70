@@ -113,7 +113,7 @@ class RegisterScreen {
     }
   };
 
-  render(appEle) {
+  render() {
     this.$formLogin.append(
       this.$titleScreen,
       this.$email.render(),
@@ -124,7 +124,7 @@ class RegisterScreen {
     );
 
     this.$container.append(this.$imageCover, this.$formLogin);
-    appEle.appendChild(this.$container);
+    return this.$container;
   }
 }
 

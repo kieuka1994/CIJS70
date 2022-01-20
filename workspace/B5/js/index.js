@@ -2,28 +2,9 @@ import LoginScreen from "./containers/Login/index.js";
 import RegisterScreen from "./containers/Register/index.js";
 import CheckEmailScreen from "./containers/CheckEmail/index.js";
 
-
 class App {
-  $activeScreen;
-  constructor() {
-    this.setUpAuthListener();
-  }
-
-  setUpAuthListener() {
-    firebase.auth().onAuthStateChanged((user) => {
-      let screen;
-      if (user && user.emailVerified) {
-        screen = new InfoScreen();
-      } else if (user && !user.emailVerified) {
-        screen = new CheckEmailScreen();
-      } else {
-        screen = new LoginScreen();
-      }
-      console.log(user);
-      this.changeActiveScreen(screen);
-    });
-  }
-
+  //   $activeScreen;
+  constructor() {}
   changeActiveScreen(screen) {
     const appEle = document.getElementById("app");
     if (appEle) {
@@ -31,10 +12,16 @@ class App {
         appEle.innerHTML = "";
       }
       this.$activeScreen = screen;
-      screen.render(appEle);
+      appEle.appendChild(screen.render());
     }
+  }
+  alert() {
+    this.$activeScreen.alert();
   }
 }
 
 const app = new App();
+const signUp = new RegisterScreen();
+const checkEmailScreen = new CheckEmailScreen();
+app.changeActiveScreen(signUp);
 export default app;

@@ -5,7 +5,6 @@ import RegisterScreen from "../Register/index.js";
 import app from "../../index.js";
 import { loginWithEmailPass } from "../../firebase/auth.js";
 
-
 class LoginScreen {
   $email;
   $password;
@@ -63,7 +62,7 @@ class LoginScreen {
     app.changeActiveScreen(signUp);
   };
 
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target;
     let isError = false;
@@ -83,9 +82,7 @@ class LoginScreen {
     }
 
     if (!isError) {
-      const userLogin = await loginWithEmailPass(email.value, password.value);
-      const mainScreen = new MainScreen();
-      app.changeActiveScreen(mainScreen);
+      loginWithEmailPass(email.value, password.value);
     }
   };
 
@@ -94,7 +91,7 @@ class LoginScreen {
     // this.$btnSubmit.render().innerHTML = `<div class="loader"></div>`;
   }
 
-  render(appEle) {
+  render() {
     this.$formLogin.append(
       this.$titleScreen,
       this.$email.render(),
@@ -104,8 +101,7 @@ class LoginScreen {
     );
 
     this.$container.append(this.$imageCover, this.$formLogin);
-
-    appEle.appendChild(this.$container);
+    return this.$container;
   }
 }
 

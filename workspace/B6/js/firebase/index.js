@@ -1,12 +1,12 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyBe1lVGbfvomXy9HYZQFYHznHEs-nj8oSA",
-    authDomain: "first-pj-2022.firebaseapp.com",
-    projectId: "first-pj-2022",
-    storageBucket: "first-pj-2022.appspot.com",
-    messagingSenderId: "317116597071",
-    appId: "1:317116597071:web:6abe6f34d84c4d123bfb3a",
-    measurementId: "G-4HF36KPNZP",
-  };
+  apiKey: "AIzaSyAMITPHSZZOEdJp3VG1O8tXKsLLnt1JLN0",
+  authDomain: "ci-70-f9de1.firebaseapp.com",
+  projectId: "ci-70-f9de1",
+  storageBucket: "ci-70-f9de1.appspot.com",
+  messagingSenderId: "110858338136",
+  appId: "1:110858338136:web:ef4ab641bb6df47479af2d",
+  measurementId: "G-W026930RR0"
+};
   
   const appFb = firebase.initializeApp(firebaseConfig);
   

@@ -30,7 +30,26 @@ async function getUserByEmail(email) {
       return null;
     }
 
-    return querySnapshot.docs[0].data();
+    return {
+      id: querySnapshot.docs[0].id,
+      ... querySnapshot.docs[0].data(),
+    };
+  } catch (error) {
+    let errorCode = error.code;
+    let errorMessage = error.message;
+    console.log(errorCode, errorMessage);
+    _noti.error(errorCode, errorMessage);
+  }
+}
+async function updateUser(uid, email, name, phone, imageUrl){
+  try{
+    const response = await db.collection("users").doc(uid).update({
+      email,
+      name,
+      phone,
+      imageUrl,
+    });
+    console.log(response);
   } catch (error) {
     let errorCode = error.code;
     let errorMessage = error.message;
@@ -39,4 +58,4 @@ async function getUserByEmail(email) {
   }
 }
 
-export { createUser, getUserByEmail };
+export { createUser, getUserByEmail, updateUser };
