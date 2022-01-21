@@ -37,6 +37,14 @@ class InputComponent {
     this.$error.classList.add("d-block");
   }
 
+  setAttribute(name, value) {
+    this.$input.setAttribute(name, value);
+  }
+
+  setEventListener(event, callBackFn) {
+    this.$input.addEventListener(event, callBackFn);
+  }
+
   render() {
     this.$container.append(this.$label, this.$containerInput);
     this.$containerInput.append(this.$input, this.$error);

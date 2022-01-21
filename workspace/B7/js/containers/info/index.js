@@ -1,112 +1,175 @@
+import { checkName, checkPhone } from "../../common/validation.js";
 import ButtonComponent from "../../components/button.js";
 import InputComponent from "../../components/input.js";
-import { checkEmail, checkPassword } from "../../common/validation.js";
-import RegisterScreen from "../Register/index.js";
-import app from "../../index.js";
-import { loginWithEmailPass } from "../../firebase/auth.js";
+import { getCurrentUser } from "../../firebase/auth.js";
+import {
+  createUser,
+  getUserByEmail,
+  updateUser,
+} from "../../firebase/store.js";
 import MainScreen from "../Main/index.js";
+import appContainer from "../../index.js";
+import * as _noti from "../../common/notify.js";
 
-class LoginScreen {
-  $email;
-  $password;
+class InfoScreen {
   $container;
-  $link;
 
-  $imageCover;
-  $formLogin;
+  $paper;
+  $avatarContainer;
+  $avatar;
+
+  $form;
+  $title;
+  $email;
+  $name;
+  $phone;
+  $imageUrl;
+
   $btnSubmit;
-  $titleScreen;
+
+  $userId;
 
   constructor() {
     this.$container = document.createElement("div");
-    this.$container.classList.add("login-form", "d-flex");
+    this.$container.classList.add("info-screen");
 
-    this.$imageCover = document.createElement("div");
-    this.$imageCover.classList.add("img-cover");
+    this.$paper = document.createElement("div");
+    this.$paper.classList.add("paper");
 
-    this.$formLogin = document.createElement("form");
-    this.$formLogin.classList.add("form-container");
-    this.$formLogin.addEventListener("submit", this.handleSubmit);
+    this.$avatarContainer = document.createElement("div");
+    this.$avatarContainer.classList.add("avatar-container");
+    this.$avatar = document.createElement("div");
+    this.$avatar.classList.add("avatar");
 
-    this.$titleScreen = document.createElement("div");
-    this.$titleScreen.classList.add("big-title");
-    this.$titleScreen.innerText = "Welcome back ";
+    this.$form = document.createElement("form");
+    this.$form.classList.add("form-container");
+    this.$form.addEventListener("submit", this.handleSubmit);
 
-    this.$link = document.createElement("a");
-    this.$link.innerText = "I don't haved a account!";
-    this.$link.classList.add("d-block", "link");
-    this.$link.addEventListener("click", this.handleChangeScreen);
+    this.$title = document.createElement("div");
+    this.$title.classList.add("big-title");
+    this.$title.innerText = "Information";
+
+    const user = getCurrentUser();
 
     this.$email = new InputComponent(
       "Email address",
       "email",
-      "login-email",
-      "email"
-    );
-    this.$password = new InputComponent(
-      "Password",
-      "password",
-      "login-password",
-      "password"
+      "info-email",
+      "text"
     );
 
+    this.$email.setAttribute("value", user.email);
+    this.$email.setAttribute("disabled", true);
+
+    this.$name = new InputComponent("Full name", "name", "info-name", "text");
+    this.$phone = new InputComponent(
+      "Phone number",
+      "phone",
+      "info-phone",
+      "text"
+    );
+    this.$imageUrl = new InputComponent(
+      "Avatar URL",
+      "imageUrl",
+      "info-imageUrl",
+      "text"
+    );
+
+    this.$imageUrl.setEventListener("input", this.handleChangeAvatar);
+
     this.$btnSubmit = new ButtonComponent(
-      "Sign in",
+      "Continue...",
       ["btn", "btn-primary", "d-block", "mt-3"],
       "submit"
     );
+
+    this.handleFetchUserByEmail();
   }
 
-  handleChangeScreen = (e) => {
-    e.preventDefault();
-    const signUp = new RegisterScreen();
-    app.changeActiveScreen(signUp);
+  async handleFetchUserByEmail() {
+    const user = getCurrentUser();
+    const userStore = await getUserByEmail(user.email);
+    if (userStore) {
+      this.$userId = userStore.id;
+
+      this.$name.setAttribute("value", userStore.name);
+      this.$phone.setAttribute("value", userStore.phone);
+      this.$imageUrl.setAttribute("value", userStore.imageUrl);
+
+      this.$avatar.style.backgroundImage = `url(${userStore.imageUrl})`;
+    } else {
+      this.$userId = "";
+    }
+  }
+
+  handleChangeAvatar = (e) => {
+    this.$avatar.style.backgroundImage = `url(${e.target.value})`;
   };
 
   handleSubmit = async (e) => {
-    e.preventDefault();
-    const { email, password } = e.target;
-    let isError = false;
-    if (checkEmail(email.value) !== null) {
-      // loi
-      this.$email.setError(checkEmail(email.value));
-      isError = true;
-    } else {
-      this.$email.setError("");
-    }
-    if (checkPassword(password.value) !== null) {
-      console.log("Pwd khong hop le");
-      this.$password.setError(checkPassword(password.value));
-      isError = true;
-    } else {
-      this.$password.setError("");
-    }
+    try {
+      e.preventDefault();
+      const { name, phone, imageUrl } = e.target;
+      const user = getCurrentUser();
+      let isError = false;
+      if (checkName(name.value)) {
+        isError = true;
+        this.$name.setError(checkName(name.value));
+      } else {
+        this.$name.setError("");
+      }
+      if (checkPhone(phone.value)) {
+        isError = true;
+        this.$phone.setError(checkPhone(phone.value));
+      } else {
+        this.$phone.setError("");
+      }
 
-    if (!isError) {
-      const userLogin = await loginWithEmailPass(email.value, password.value);
-      const mainScreen = new MainScreen();
-      app.changeActiveScreen(mainScreen);
+      if (isError) {
+        return;
+      }
+
+      if (this.$userId) {
+        await updateUser(
+          this.$userId,
+          user.email,
+          name.value,
+          phone.value,
+          imageUrl.value
+        );
+      } else {
+        await createUser(
+          user.email,
+          "",
+          name.value,
+          phone.value,
+          imageUrl.value
+        );
+      }
+
+      const newMain = new MainScreen();
+      appContainer.changeActiveScreen(newMain);
+    } catch (error) {
+      _noti.error(error.code, error.message);
     }
   };
 
-  setLoading() {
-    // this.$btnSubmit.render().innerText = "";
-    // this.$btnSubmit.render().innerHTML = `<div class="loader"></div>`;
-  }
-
   render(appEle) {
-    this.$formLogin.append(
-      this.$titleScreen,
+    appEle.appendChild(this.$container);
+    this.$container.append(this.$paper);
+    this.$paper.append(this.$form, this.$avatarContainer);
+
+    this.$form.append(
+      this.$title,
       this.$email.render(),
-      this.$password.render(),
-      this.$btnSubmit.render(),
-      this.$link
+      this.$name.render(),
+      this.$phone.render(),
+      this.$imageUrl.render(),
+      this.$btnSubmit.render()
     );
 
-    this.$container.append(this.$imageCover, this.$formLogin);
-
-    appEle.appendChild(this.$container);
+    this.$avatarContainer.appendChild(this.$avatar);
   }
 }
 
-export default LoginScreen;
+export default InfoScreen;

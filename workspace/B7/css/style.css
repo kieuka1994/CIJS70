@@ -81,6 +81,148 @@ body {
   animation: spin 2s linear infinite;
 }
 
+.info-screen {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  justify-content: center;
+  align-items: center;
+}
+.paper {
+  background-color: #ffffff;
+  width: 60%;
+  min-width: 600px;
+  height: 55vh;
+  min-height: 450px;
+  border-radius: 15px;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.form-container {
+  flex-grow: 1;
+}
+
+.avatar-container {
+  width: 30%;
+  min-width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  border: 1px solid rgb(207, 207, 207);
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("https://cdnimg.vietnamplus.vn/t1200/Uploaded/lepz/2019_04_25/ttxvnlyson.jpg") no-repeat center / cover;
+}
+
+.chat-paper {
+  width: 85%;
+  height: 80vh;
+  min-width: 576px;
+  min-height: 500px;
+  display: flex;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.sibar-container {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  max-width: 300px;
+  min-width: 220px;
+  border-radius: 15px;
+  color: #fff;
+  padding: 20px 10px 12px 16px;
+  position: relative;
+  background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 23px;
+}
+.btn-create {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 100%;
+  color: #fbc2eb;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  text-align: center;
+  line-height: 25px;
+  font-size: 23px;
+  border: 1px solid #fff;
+  transition: all 0.25s ease-out;
+}
+.btn-create:hover {
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: #fbc2eb;
+  transition: all 0.15s ease-in;
+}
+
+#modalTittle {
+  color: #333333;
+}
+
+.btn-linear {
+  background-color: #a18cd1;
+  border: 2px solid #a18cd1;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: all 0.25s ease;
+}
+.btn-linear:hover {
+  color: #a18cd1;
+  background-color: #fff;
+  transition: all 0.15s ease;
+  border: 2px solid #a18cd1;
+}
+.title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #333;
+  margin-bottom: 12px;
+}
+.modal-input {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 19px !important;
+  color: #333 !important;
+}
+
+.caution {
+  color: red;
+  display: inline-block;
+  margin-right: 4px;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -88,4 +230,58 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+#messages{
+  padding-bottom: 25%;
+}
+
+li {
+  list-style-type: none;
+  margin-bottom: 10px;
+  background-color: #6929ca;
+  padding: 5px;
+  border-radius: 10px;
+  color: white;
+  width: 60%;
+}
+
+li span {
+  font-style: italic;
+  font-weight: bolder;
+  color: #b5b0b9;
+}
+
+#chat {
+  width: 70%;
+  margin: auto;
+}
+
+#message-form {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #b7b5b9;
+}
+
+input {
+  width: 60%;
+  height: 25px;
+}
+
+button {
+  width: 25%;
+  height: 35px;
+}
+
+.sent {
+  text-align: right;
+  background-color: #a79cb3;
+  margin-left: 50%;
+}
+
+.sent span {
+  margin-left: 5px;
+  color: #6929ca;
 }

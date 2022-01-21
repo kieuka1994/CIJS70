@@ -78,5 +78,38 @@ async function createConverstaion(name, imageUrl, desc, users, email) {
     throw error;
   }
 }
+async function getChatList(){
+  try {
+      const querySnapshot = await db
+          .collection("chat")
+          .get();
+      if (querySnapshot.docs.length === 0) {
+          return null;
+      }
+      return querySnapshot.docs;
+      
+  } catch (error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      throw error;
+  }
+}
 
-export { createUser, getUserByEmail, updateUser, createConverstaion };
+async function getChatDataByID(id){
+  try {
+      const querySnapshot = await db
+          .collection("chat")
+          .doc(id)
+          .get();
+      
+     return querySnapshot;
+         
+  } catch (error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      throw error;
+  }
+}
+export { createUser, getUserByEmail, updateUser, createConverstaion, getChatDataByID, getChatList };

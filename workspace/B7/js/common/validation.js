@@ -18,3 +18,23 @@ export const checkPassword = (pwd) => {
   }
   return null;
 };
+
+export const checkName = (name) => {
+  if (!name || name.length === 0) {
+    return "Name is require.";
+  }
+  if (name.length > 50) {
+    return "Name is too long.";
+  }
+  return null;
+};
+
+export const checkPhone = (phone) => {
+  if (!phone || phone.length === 0) {
+    return "Phone number is require.";
+  }
+  if (phone.length !== 10) {
+    return "Phone number is invalid.";
+  }
+  return null;
+};
