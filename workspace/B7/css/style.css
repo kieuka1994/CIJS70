@@ -113,8 +113,8 @@ body {
 }
 
 .avatar {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border-radius: 100%;
   border: 1px solid rgb(207, 207, 207);
 
@@ -231,8 +231,9 @@ body {
     transform: rotate(360deg);
   }
 }
+
 #messages{
-  padding-bottom: 25%;
+  padding-bottom: 30%;
 }
 
 li {
@@ -242,7 +243,7 @@ li {
   padding: 5px;
   border-radius: 10px;
   color: white;
-  width: 60%;
+  width: 50%;
 }
 
 li span {
@@ -252,7 +253,7 @@ li span {
 }
 
 #chat {
-  width: 70%;
+  width: 80%;
   margin: auto;
 }
 
@@ -266,13 +267,13 @@ li span {
 }
 
 input {
-  width: 60%;
-  height: 25px;
+  width: 70%;
+  height: 30px;
 }
 
 button {
   width: 25%;
-  height: 35px;
+  height: 38px;
 }
 
 .sent {

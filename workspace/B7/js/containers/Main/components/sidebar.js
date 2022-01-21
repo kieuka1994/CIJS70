@@ -31,7 +31,7 @@ class SidebarComponent {
     this.$listContainer = document.createElement("div");
     this.$listContainer.classList.add("cs-list");
 
-    this.$listItems = new Array(7)
+    this.$listItems = new Array(10)
       .fill(1)
       .map((i) => new SidebarItem().render());
 
