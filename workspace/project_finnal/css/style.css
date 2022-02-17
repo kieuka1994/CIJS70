@@ -1,0 +1,293 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif !important;
+}
+
+body {
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #212529;
+  text-align: left;
+  background-color: #f5f8fa;
+}
+
+.login-form{
+  width: 100vw;
+  height: 100vh;
+  background: url("https://br-art.vn/wp-content/uploads/2017/07/background-phong-canh-48-768x432.jpg") no-repeat center / cover;
+  background-size: 100%;
+}
+
+.login-container {
+  width: 650px;
+  height: 450px;
+  margin: auto;
+  padding: 0px 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, .3);
+  border-radius: 35px;
+  transition: 0.9s;
+}
+.login-container:hover{
+  background-color: rgba(0, 0, 0, .7);
+} 
+
+.register-container:hover {
+  background-color: rgba(0, 0, 0, .7);
+}
+.register-container {
+  width: 650px;
+  height: 650px;
+  margin: auto;
+  padding: 0px 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, .3);
+  border-radius: 35px;
+  transition: 0.9s;
+}
+
+.myInputContain{
+  color: #fff;
+  display: flex;
+  margin: 20px;
+}
+.myInput{
+  width: 355px;
+  background-color: transparent;
+  color: #fff;
+  border: none ;
+}
+::placeholder{
+  color: #fff;
+}
+.myLabel{
+  width: 160px;
+}
+.big-title {
+  text-align: center;
+  font-size: 32px;
+  line-height: 30px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.form-control {
+  height: 60px;
+  border-radius: 10px;
+}
+.label-input {
+  line-height: 60px;
+}
+.myError{
+  color: red;
+  font-size: 15px;
+}
+.ver-contain{
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 500px;
+  align-items: center;
+  margin: 100px auto;
+}
+#email-notifi{
+  font-size: 30px;
+  color: cornflowerblue
+}
+#disciption{
+  text-align: center;
+}
+.mt-4 a{
+  font-style: italic;
+  font-weight: 700;
+  cursor: pointer;
+}
+.loader {
+  margin: 0 auto;
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid #db4257; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.infor-screen{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background: url("https://br-art.vn/wp-content/uploads/2017/07/background-phong-canh-48-768x432.jpg") no-repeat center / cover;
+  justify-content: center;
+  align-items: center;
+
+}
+.paper{
+  background-color: rgba(0, 0, 0, .3);
+  width: 60%;
+  min-width: 600px;
+  height: 55vh;
+  min-height: 450px;
+  border-radius: 15px;
+  display: flex;
+  flex-wrap: nowrap;
+  transition: 0.9s;
+}
+.paper:hover{
+  background-color: rgba(0, 0, 0, .7);
+}
+.infor-container{
+  width: 70%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+.ava-container{
+width: 30%;
+min-width: 200px;
+display: flex;
+justify-content: center;
+  align-items: center;
+
+}
+.ava{
+  width: 160px;
+  height: 160px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.main{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+  /* background: url("https://br-art.vn/wp-content/uploads/2017/07/background-phong-canh-48-768x432.jpg") no-repeat center / cover; */
+
+}
+
+.caution{
+  color: red;
+}
+
+.cs-header{
+  width: 100%;
+  height: 100px;
+  background-color: #db4257;
+}
+.cs-body{
+  width: 100%;
+  height: 70%;
+  /* background-color: #f5f8fa; */
+}
+.cs-left{
+  width: 70%;
+  height: 100%;
+  background-color: aquamarine;
+  flex-direction: column;
+}
+.cs-right{
+  width: 30%;
+  height: 100%;
+  background-color: bisque;
+  flex-direction: column;
+}
+.cs-listPost{
+  width: 100%;
+  height: 100%;
+  background-color: brown;
+  flex-direction: column;
+  overflow: auto;
+}
+.btn{
+  width: 200px;
+}
+.cs-uInforArea{
+  width: 100%;
+  height: 50%;
+  background-color: blueviolet;
+}
+.cs-postContain{
+  width: 100%;
+  min-height: 100%;
+  background-color: cadetblue;
+
+}
+.cs-postInfor{
+  
+  width: 100%;
+  height: 10%;
+  background-color: coral;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cs-contentArea{
+  flex-direction: column;
+  width: 100%;
+  height: 60%;
+  background-color: #f5f8fa;
+ 
+}
+.cs-content{
+  text-align: justify;
+  padding: 10px;
+}
+.line{
+  border-bottom: 1px solid #212529;
+}
+.cs-cmtContain{
+  width: 100%;
+  height: 30%;
+  background-color: aqua;
+}
+.cs-postAva{
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 0 5px;
+}
+.lc-show{
+  width: 100%;
+  height: 40px;
+  background-color: burlywood;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.likeCount{
+  display: inline-block;
+  margin-left: 10px;
+
+}
+.cmtCount{
+  display: inline-block;
+  margin-right: 10px;
+ 
+}
+
+.comments-container {
+  flex-direction: column;
+  height: calc(100% - 82px);
+}
