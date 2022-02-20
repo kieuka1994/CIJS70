@@ -1,76 +1,48 @@
+import listPost from "./list-post.js"
 import {createPost} from "../../../firebase/store.js"
 import {getCurrentUser} from "../../../firebase/auth.js"
-import * as _noti from "../../../../common/notify.js"
-import  post  from "./post.js";
-import db from "../../../firebase/firestore.js"
+import inforModal from "./inforModal.js"
 class body{
     $container;
-
+    $userInforContain;
+    $listPost;
     $leftCol;
     $rightCol;
-    $listPostContain;
-    $userInforContain;
-    $postItems;
     
+    $chatBoxContain; 
+    $btnCreate;
+    $modal;
+
     $userInfor;
     $userName;
     $userPostCount;
     $userAchive;
     $userAva;
-
-    $chatBoxContain; 
-    $btnCreate;
-    $modal;
+    
     constructor(){
         this.$container = document.createElement("div");
         this.$container.classList.add("cs-body", "d-flex");
 
         this.$leftCol = document.createElement("div");
         this.$leftCol.classList.add("cs-left","d-flex");
+        this.$listPost = new listPost();
 
         this.$rightCol = document.createElement("div");
         this.$rightCol.classList.add("cs-right","d-flex");
 
-        this.$listPostContain = document.createElement("div");
-        this.$listPostContain.classList.add("cs-listPost","d-flex");
-
-        this.$userInforContain = document.createElement("div");
-        this.$userInforContain.classList.add("cs-uInforArea");
-
-        // this.$container = document.createElement("div");
-        // this.$container.classList.add("cs-body");
-
-        // this.$container = document.createElement("div");
-        // this.$container.classList.add("cs-body");
-
         this.$btnCreate = document.createElement("div");
-        this.$btnCreate.classList.add("btn", "btn-primary");
+        this.$btnCreate.classList.add("btn", "btn-primary", "btnCreatePost");
         this.$btnCreate.setAttribute("data-bs-toggle", "modal");
         this.$btnCreate.setAttribute("data-bs-target", "#postModal");
         this.$btnCreate.innerText = "Create new post";
 
+        const userData = JSON.parse(localStorage.getItem("auth-info"));
+        this.$userInforContain = new inforModal(userData.email);
+        this.$userInforContain.render().classList.remove("cs-inforModal")
+        this.$userInforContain.render().classList.add("cs-uInforArea", "d-flex");
+
+
         this.renderModal();
-       
-        this.fetchPost();
-
-    }
-    handleUpdate =()=>{
-
-    }
-    handleDelete=()=>{
-
-    }
-    fetchPost(){
-      db.collection("post").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          this.$postItems = new post(
-            doc.data(),
-            this.handleUpdate,
-            this.handleDelete
-          );
-          this.$listPostContain.append(this.$postItems.render());
-        });
-    });
     }
     renderModal(){
         this.$modal = document.createElement("div");
@@ -81,7 +53,7 @@ class body{
         this.$modal.setAttribute("aria-hidden", "true");
 
         this.$modal.innerHTML=`
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="postModalLabel">New post</h5>
@@ -90,8 +62,16 @@ class body{
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
+              <label for="message-text" class="col-form-label">Post Content:</label>
                 <textarea class="form-control" id="message-text"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="postImageUrl" class="col-form-label">ImageUrl:</label>
+                <input class="form-control" type = "text" id="postImageUrl">
+              </div>
+              <div class="mb-3">
+                <label for="imageFile" class="col-form-label">Or upload your file:</label>
+                <input type="file" id="imageFile">
               </div>
             </form>
           </div>
@@ -115,13 +95,14 @@ class body{
     handleSubmit= async()=>{
         try {
             const postContent = document.getElementById("message-text");
-           
+            const postImageUrl = document.getElementById("postImageUrl");
             const user = getCurrentUser();
             await createPost(
                 postContent.value,
+                postImageUrl.value,
                 user.email,
-                "...",
-                "3"
+                [],
+                []
             )
             this.handleClose();
         } catch (error) {
@@ -132,10 +113,8 @@ class body{
     render(parentContainer){
         parentContainer.append(this.$container);
         this.$container.append(this.$leftCol, this.$rightCol, this.$modal);
-
-        this.$leftCol.append(this.$btnCreate, this.$listPostContain);
-        this.$rightCol.append(this.$userInforContain);
-
+        this.$leftCol.append(this.$btnCreate, this.$listPost.render());
+        this.$rightCol.append(this.$userInforContain.render());
         document
         .getElementById("btn-createPost")
         .addEventListener("click", this.handleSubmit);
@@ -144,6 +123,5 @@ class body{
         .getElementById("btn-icon-close")
         .addEventListener("click", this.handleClose);
     }
-
 }
-export default body;
+export default body

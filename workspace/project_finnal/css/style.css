@@ -177,9 +177,7 @@ justify-content: center;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
-  /* background: url("https://br-art.vn/wp-content/uploads/2017/07/background-phong-canh-48-768x432.jpg") no-repeat center / cover; */
+  background-color: azure;
 
 }
 
@@ -193,70 +191,125 @@ justify-content: center;
   background-color: #db4257;
 }
 .cs-body{
-  width: 100%;
+  margin: 0 auto;
+  width: 90%;
   height: 70%;
-  /* background-color: #f5f8fa; */
+  background-color: rgba(248, 248, 248, 0.726);
 }
 .cs-left{
-  width: 70%;
+  width: 80%;
   height: 100%;
-  background-color: aquamarine;
+
   flex-direction: column;
 }
 .cs-right{
-  width: 30%;
+  width: 20%;
   height: 100%;
   background-color: bisque;
   flex-direction: column;
 }
 .cs-listPost{
   width: 100%;
+  position: relative;
   height: 100%;
-  background-color: brown;
   flex-direction: column;
   overflow: auto;
 }
-.btn{
+.cs-listPost::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(227, 180, 228, 0.3);
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.cs-listPost::-webkit-scrollbar {
+  width: 8px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.cs-listPost::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #e2e2e2;
+}
+.btnCreatePost{
   width: 200px;
 }
 .cs-uInforArea{
   width: 100%;
   height: 50%;
-  background-color: blueviolet;
-}
-.cs-postContain{
-  width: 100%;
-  min-height: 100%;
-  background-color: cadetblue;
 
 }
-.cs-postInfor{
+.cs-postContain{
+  width: 95%;
+  height: 100vh;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 15px;
+  margin: 10px auto;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .5);
   
+}
+.cs-postInfor{
   width: 100%;
-  height: 10%;
-  background-color: coral;
+  height: 50px;
   align-items: center;
   font-weight: 700;
-  cursor: pointer;
+  background-color: #f38d9b;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .cs-contentArea{
   flex-direction: column;
   width: 100%;
-  height: 60%;
-  background-color: #f5f8fa;
- 
+  height: 80vh;
 }
 .cs-content{
   text-align: justify;
   padding: 10px;
+  min-height: fit-content;
+}
+.cs-postImg{
+  width: 60vw;
+  height: 60vh; 
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 5px auto;
 }
 .line{
+  border-top: 1px solid #212529;
   border-bottom: 1px solid #212529;
 }
-.cs-cmtContain{
+.cs-actionArea{
+  margin-top: 5px;
   width: 100%;
-  height: 30%;
-  background-color: aqua;
+  height: 38px;
+  /* background-color: aqua; */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.btn-like{
+  width: 20%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.5s;
+  border-radius: 7px;
+  margin: 0 5px;
+}
+.btn-like:hover{
+  background-color: rgba(192,192,192, .4);
+}
+.like-img{
+  margin: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: url("https://img.icons8.com/ios/50/000000/facebook-like--v1.png");
+  /* <img src="https://img.icons8.com/ios-filled/50/000000/facebook-like.png"/> */
 }
 .cs-postAva{
   width: 40px;
@@ -267,14 +320,38 @@ justify-content: center;
   background-size: cover;
   background-position: center;
   margin: 0 5px;
+  cursor: pointer;
+
 }
+.cs-inforModal{
+  margin: 10px;
+  position: relative;
+  width: 40%;
+  height: 100%;
+  background-color: antiquewhite;
+  visibility: hidden;
+  display: none;
+  opacity: 0;
+  z-index: 9;
+}
+.cs-uInforArea{
+  
+  position: relative;
+  width: 100%;
+  height: 40%;
+
+}
+/* .cs-postAva:hover .cs-inforModal{
+  display: flex !important;
+  visibility: visible;
+  opacity: 1;
+} */
 .lc-show{
   width: 100%;
   height: 40px;
   background-color: burlywood;
   align-items: center;
   justify-content: space-between;
-
 }
 .likeCount{
   display: inline-block;
@@ -284,10 +361,145 @@ justify-content: center;
 .cmtCount{
   display: inline-block;
   margin-right: 10px;
- 
+}
+.likeIcon{
+  width: 30px;
+  height: 30px;
+}
+.show {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+.cs-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100px;
+  height: auto;
+  background: #fff;
+  color: #333;
+  /* display: flex; */
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 8px;
+  z-index: 10;
+
+  display: none;
+  visibility: hidden;
+  opacity: 0;
 }
 
-.comments-container {
+.hide{
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
+.cs-avaModal{
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 5px;
+}
+.cs-subModal{
+  justify-content: space-between;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.cs-name{
+  font-weight: 700;
+}
+.composer-contain{
+  width: 80%;
+}
+.composer-contain > input{
+  padding: 8px;
+  border: none;
+  outline: none;
+  width: 95%;
+  background-color: rgba(128,128,128,.3);
+  border-radius: 25px;
+  color: #000;
+  margin-right: 5px;
+}
+.comment-container {
+  height: 100px;
+  width: 100%;
   flex-direction: column;
   height: calc(100% - 82px);
+}
+
+
+
+.list-container {
+  width: 100%;
+  min-height: 150px;
+  flex-direction: column;
+  margin: 4px 0px;
+  padding: 8px;
+  overflow: auto;
+}
+
+.list-container::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(227, 180, 228, 0.3);
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.list-container::-webkit-scrollbar {
+  width: 8px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #e2e2e2;
+}
+
+.cmt-item-container {
+  flex-direction: column;
+  margin: 6px 0px;
+}
+
+.author-item {
+  font-size: 12px;
+  font-style: italic;
+  line-height: 15px;
+}
+
+.content-item {
+  background-color: #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 5px;
+  margin-top: 4px;
+  width: fit-content;
+}
+
+.avatar-item {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  border: 1px solid rgb(207, 207, 207);
+  margin: 4px 6px;
+}
+
+.cmt-item-right {
+  justify-content: flex-end;
+  text-align: right;
+  align-items: flex-end;
+}
+
+.cmt-item-right > div:last-child {
+  flex-direction: row-reverse;
 }

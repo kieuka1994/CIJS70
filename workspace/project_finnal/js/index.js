@@ -5,18 +5,19 @@ import LoginScreen from "./container/login/login.js";
 import MainScreen from "./container/main/main.js";
 import verifiScreen from "./container/verifi/verifi.js";
 import RegisterScreen from "./container/Register/register.js";
+
 class App {
     $activeScreen;
     constructor() {
         this.setUpAuthListener();
     }
     setUpAuthListener(){
+        const userData = localStorage.getItem("auth-info");
         firebase.auth().onAuthStateChanged((user) => {
             let screen;
             if (user && user.emailVerified) {
-             screen = new MainScreen();
-            
-            //  screen = new inforScreen();
+                if(userData) screen = new MainScreen();
+                else screen = new inforScreen();
 
             //  screen = new LoginScreen();
 

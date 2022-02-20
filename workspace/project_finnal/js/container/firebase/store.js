@@ -1,21 +1,24 @@
 import db from "./firestore.js";
 import * as _noti from "../../common/notify.js";
 
-
-async function createUser(email, name, phone, imageUrl) {
+async function createUser(email, name, phone, imageUrl, likeList, cmtList) {
     try {
         const response = await db.collection("users").add({
             email,
             name,
             phone,
             imageUrl,
+            likeList,
+            cmtList
         });
         localStorage.removeItem("auth-info");
         localStorage.setItem("auth-info", JSON.stringify({
             email,
             name,
             phone,
-            imageUrl
+            imageUrl,
+            likeList,
+            cmtList
         }));
         console.log(response);
 
@@ -48,7 +51,7 @@ async function getUserByEmail(email) {
     }
 }
 
-async function updateUserData( uid, email, name, phone, imageUrl) {
+async function updateUserData( uid, email, name, phone, imageUrl, likeList, cmtList) {
     try {
         const reponse = await db
             .collection("users")
@@ -58,13 +61,17 @@ async function updateUserData( uid, email, name, phone, imageUrl) {
                 name,
                 phone,
                 imageUrl,
+                likeList,
+                cmtList
             });
             localStorage.removeItem("auth-info");
             localStorage.setItem("auth-info", JSON.stringify({
                 email,
                 name,
                 phone,
-                imageUrl
+                imageUrl,
+                likeList,
+                cmtList
             }));
     } catch (error) {
         let errorCode = error.code;
@@ -73,13 +80,15 @@ async function updateUserData( uid, email, name, phone, imageUrl) {
         throw error;
     }
 }
-async function createPost(content, author, comments, likeCount){
+async function createPost(content,imgUrl, author,likedList, cmtList){
     try {
         const reponse = await db.collection("post").add({
             content,
+            imgUrl,
             author,
-            comments,
-            likeCount,
+            likedList,
+            cmtList,
+           
             updateAt: firebase.firestore.FieldValue.serverTimestamp()
         })
     } catch (error) {
@@ -118,15 +127,15 @@ async function updateChat(id, name, imageUrl, users, email){
         throw error; 
     }
 }
-async function addUserByEmail(chat, newEmail){
+async function addUserLikedByEmail(post, newEmail){
     try {
+        
         const reponse = await db
-            .collection("chat")
-            .doc(chat.id)
+            .collection("post")
+            .doc(post.id)
             .update({
-                ...chat,
-                users:[...chat.users, newEmail],
-                updateAt: firebase.firestore.FieldValue.serverTimestamp(),
+                ...post,
+                likedList:[...post.likedList, newEmail],
             });
     } catch (error) {
         let errorCode = error.code;
@@ -135,32 +144,16 @@ async function addUserByEmail(chat, newEmail){
         throw error;
     }
 }
-async function confirmAddUser(chat){
+async function addCommentToPost(post, newID){
     try {
-       const result = await Swal.fire({
-            title: 'Submit your email',
-            input: 'text',
-            inputAttributes: {
-              autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Add',
-            showLoaderOnConfirm: true,
-            preConfirm: async (email) => {
-             const user = await getUserByEmail(email);
-             return user;
-            },
-            allowOutsideClick: () => !Swal.isLoading()
-          })
-          console.log(result);
-          if (result.value){
-              console.log(result.value);
-              const {email} = result.value;
-              const reponse = await addUserByEmail(chat, email);
-          } else{
-              _noti.error("Oops...", "Your email is inexit!");
-              return null;
-          }
+        
+        const reponse = await db
+            .collection("post")
+            .doc(post.id)
+            .update({
+                ...post,
+                cmtList:[...post.cmtList, newID],
+            });
     } catch (error) {
         let errorCode = error.code;
         let errorMessage = error.message;
@@ -168,12 +161,30 @@ async function confirmAddUser(chat){
         throw error;
     }
 }
-async function sendMessage (sender, content, convID, imgUrl){
+async function removeUserUnLiked(post, Email){
     try {
-        const reponse = await db.collection("message").add({
+        
+        const reponse = await db
+            .collection("post")
+            .doc(post.id)
+            .update({
+                ...post,
+                likedList:firebase.firestore.FieldValue.arrayRemove(Email)
+            });
+    } catch (error) {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        throw error;
+    }
+}
+
+async function sendComment (sender, content, postID, imgUrl){
+    try {
+        const reponse = await db.collection("comment").add({
             sender, 
             content, 
-            convID,
+            postID,
             sendAt: firebase.firestore.FieldValue.serverTimestamp(),
             avaSend: imgUrl
         });
@@ -192,6 +203,8 @@ export {
     createPost, 
     updateChat, 
     deleteChat,
-    confirmAddUser,
-    sendMessage,
+    sendComment,
+    addUserLikedByEmail,
+    removeUserUnLiked,
+    addCommentToPost
 } 

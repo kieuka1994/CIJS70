@@ -128,9 +128,9 @@ class inforScreen {
             if(!isError){
                 if(this.$userID){
                     //setloading
-                    await updateUserData(this.$userID, email.value, name.value, phone.value, imageUrl.value);
+                    await updateUserData(this.$userID, email.value, name.value, phone.value, imageUrl.value, [], []);
                 } else {
-                    await createUser(user.email, name.value, phone.value, imageUrl.value);
+                    await createUser(user.email, name.value, phone.value, imageUrl.value, [], []);
                 }
                 const mainScreen = new MainScreen();
                 app.changeActiveScreen(mainScreen);
