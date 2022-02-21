@@ -1,8 +1,8 @@
 import { getCurrentUser } from "../../../firebase/auth.js";
-import {getUserByEmail} from "../../../firebase/store.js"
-import inforModal from "./inforModal.js"
+import { getUserByEmail } from "../../../firebase/store.js"
 import Composer from "./composer.js"
-import CommentList from "./cmt-list.js"
+import db from "../../../../container/firebase/firestore.js";
+import CommemtItem from "./cmt-item.js";
 class Post {
     $container;
     $inforArea;
@@ -18,6 +18,7 @@ class Post {
     $cmtCount;
 
     $listComment;
+    $listItem;
     $btnlike;
     $commentArea;
     $actionArea;
@@ -51,11 +52,11 @@ class Post {
         // author infor 
         this.$inforArea = document.createElement("div");
         this.$inforArea.classList.add("cs-postInfor", "d-flex");
-        
+
 
         this.$userAva = document.createElement("div");
         this.$userAva.classList.add("cs-postAva");
-        
+
 
         this.$userName = document.createElement("div");
 
@@ -87,37 +88,59 @@ class Post {
         this.$likeimg = document.createElement("div")
         this.$likeimg.classList.add("like-img");
         this.$btnlike.append(this.$likeimg);
-        
 
-        this.$commentArea = new Composer(post);
-        this.$listCmt = new CommentList(post);
+
+        this.$commentArea = new Composer(post, cbCmt);
+        this.$listCmt = document.createElement("div");
+        this.$listCmt.classList.add("list-container", "d-flex");
+        this.setUpCmtListener(post);
         // comment list
 
 
         this.setUpData(post, cbUpdate, cbDelete, cbLike, cbCmt);
         // like and unlike
-        this.$liked = this.checkLiked(); 
-        if(this.$liked) this.$likeimg.style.backgroundImage = `url("https://img.icons8.com/ios-filled/50/000000/facebook-like.png")`;
+        this.$liked = this.checkLiked();
+        if (this.$liked) this.$likeimg.style.backgroundImage = `url("https://img.icons8.com/ios-filled/50/000000/facebook-like.png")`;
         else this.$likeimg.style.backgroundImage = `url("https://img.icons8.com/ios/50/000000/facebook-like--v1.png")`;
     }
-    checkLiked =()=>{
+    checkLiked = () => {
         const user = getCurrentUser();
-        if(this.$item.likedList.includes(user.email)) return true;
+        if (this.$item.likedList.includes(user.email)) return true;
         return false;
     }
-    handleLike=()=>{
-        if(this.$liked === false){
+    handleLike = () => {
+        if (this.$liked === false) {
             this.$likeimg.style.backgroundImage = `url("https://img.icons8.com/ios-filled/50/000000/facebook-like.png")`;
             this.$liked = true;
             this.$callbackLike(this.$liked, this.$item);
 
         }
-        else if(this.$liked === true){
+        else if (this.$liked === true) {
             this.$likeimg.style.backgroundImage = `url("https://img.icons8.com/ios/50/000000/facebook-like--v1.png")`;
             this.$liked = false;
             this.$callbackLike(this.$liked, this.$item);
         }
-        
+    }
+    handleComment = () => {
+
+    }
+    setUpCmtListener(post) {
+        db.collection("comment")
+            .where("postID", "==", post.id)
+            .orderBy("sendAt", "desc")
+            .onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    console.log(change.type);
+                    if (change.type === "added") {
+                        const cmtFb = change.doc.data();
+                        const cmtEle = new CommemtItem({
+                            ...cmtFb
+                        });
+
+                        this.$listCmt.append(cmtEle.render());
+                    }
+                });
+            });
     }
     setUpData = (post, cbUpdate, cbDelete, cbLike, cbCmt) => {
         this.$id = post.id;
@@ -136,25 +159,25 @@ class Post {
         this.fillDataToEle(post);
         // console.log(post);
     }
-    fillDataToEle = async(post)=> {
+    fillDataToEle = async (post) => {
         const authorData = await getUserByEmail(this.$author);
 
         this.$userAva.style.backgroundImage = `url(${authorData.imageUrl})`;
         this.$userName.innerText = authorData.name;
-        if(this.$imgPost) {
+        if (this.$imgPost) {
             this.$imgEle.classList.add("cs-postImg");
-            this.$imgEle.style.backgroundImage=`url(${this.$imgPost})`;
+            this.$imgEle.style.backgroundImage = `url(${this.$imgPost})`;
         }
         this.$contentEle.innerText = post.content;
         this.$likeCount.innerHTML = `<img class="likeIcon"src="https://img.icons8.com/external-others-iconmarket/64/000000/external-like-social-media-others-iconmarket-3.png"/> ${post.likedList.length}`;
         this.$cmtCount.innerText = post.cmtList.length + " comment";
 
     }
-    
+
     render() {
-        this.$container.append(this.$inforArea, this.$postContentArea);
+        this.$container.append(this.$inforArea, this.$postContentArea, this.$listCmt);
         this.$inforArea.append(this.$userAva, this.$userName);
-        this.$postContentArea.append(this.$imgEle,this.$contentEle, this.$lcContain, this.$actionArea, this.$listCmt.render());
+        this.$postContentArea.append(this.$contentEle, this.$imgEle, this.$lcContain, this.$actionArea);
         this.$lcContain.append(this.$likeCount, this.$cmtCount);
         this.$actionArea.append(this.$btnlike, this.$commentArea.render())
         return this.$container;

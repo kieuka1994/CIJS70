@@ -11,7 +11,7 @@ class Composer{
     $activePost;
     $callBackCmt;
 
-    constructor(post){
+    constructor(post, cbCmt){
         this.$container = document.createElement("form");
         this.$container.classList.add("composer-contain", "d-flex");
         this.$container.addEventListener("submit", this.handleSendComment);
@@ -27,6 +27,7 @@ class Composer{
             ["btn", "btn-primary", "d-block"],
             "submit"
         )
+        this.$callBackCmt = cbCmt;
         this.$activePost = post;
 
     }
@@ -45,7 +46,7 @@ class Composer{
                 const infor = JSON.parse(localStorage.getItem("auth-info"));
                 this.$inputCmt.value="";
                 await sendComment(infor.name, value, this.$activePost.id, infor.imageUrl||"");
-                
+                this.$callBackCmt(this.$activePost);
             
         } catch (error) {
             _noti.error(error.code, error.message);
