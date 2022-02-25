@@ -1,0 +1,76 @@
+.demo_s_ad_img_big,.demo_s_ad_img_small {
+    max-width: 100vw;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: .2rem;
+    border: .2px solid rgba(0,0,0,.12);
+    cursor: pointer
+}
+
+.demo_s_ad_img_big {
+    width: 1000px;
+    height: 160px
+}
+
+.demo_s_ad_img_small {
+    width: 329px;
+    height: 188px
+}
+
+.s-ad-area {
+    min-width: 100%;
+    max-width: 100vw;
+    height: auto;
+    position: absolute;
+    left: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    padding-bottom: 15px
+}
+
+.s-ad-area img {
+    border-radius: .2rem;
+    border: .2px solid rgba(0,0,0,.12)
+}
+
+.s-ad-area .innr {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.s-ad-area .inf {
+    position: absolute;
+    left: .2px;
+    top: .2px;
+    padding: 7px;
+    padding-right: 10px;
+    background: rgba(0,0,0,.12);
+    color: rgba(255,255,255,.75);
+    font-size: x-small;
+    border-top-left-radius: .2rem;
+    border-bottom-right-radius: .2rem;
+    width: auto;
+    pointer-events: none
+}
+
+.s-ad-area .inf:before {
+    content: "Advertisement"
+}
+
+@media(min-width: 63em) {
+    .s-ad-area .innr,.s-ad-area .innr img {
+        width:1000px;
+        height: 160px
+    }
+}
+
+@media(max-width: 63em) {
+    .s-ad-area .innr,.s-ad-area .innr img {
+        width:329px;
+        height: 188px
+    }
+}
